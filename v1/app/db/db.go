@@ -31,7 +31,7 @@ func init() {
 		User:     os.Getenv("DB_USER"),
 		Host:     os.Getenv("DB_HOST"),
 	}
-	dbinst, err := db.NewSQL(config)
+	dbinst, err := db.New(config)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -49,8 +49,8 @@ func init() {
 		dbInstance, err = gorm.Open(sqlite.New(sqlite.Config{
 			Conn: dbinst,
 		}))
-	case db.DriverMysql:
-		// ...
+	// case db.DriverMysql:
+	// 	// ...
 	default:
 		log.Fatal("invalid driver:", config.Driver)
 	}

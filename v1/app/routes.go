@@ -1,13 +1,12 @@
 package app
 
 import (
+	"log/slog"
 	"v1/app/handlers"
 	"v1/app/views/errors"
 	"v1/plugins/auth"
-	"log/slog"
 
 	"github.com/anthdm/superkit/kit"
-	"github.com/anthdm/superkit/kit/middleware"
 	"github.com/go-chi/chi/v5"
 
 	chimiddleware "github.com/go-chi/chi/v5/middleware"
@@ -17,7 +16,7 @@ import (
 func InitializeMiddleware(router *chi.Mux) {
 	router.Use(chimiddleware.Logger)
 	router.Use(chimiddleware.Recoverer)
-	router.Use(middleware.WithRequest)
+	// router.Use(middleware.WithRequest)
 }
 
 // Define your routes in here

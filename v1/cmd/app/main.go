@@ -1,12 +1,12 @@
 package main
 
 import (
-	"v1/app"
-	"v1/public"
 	"fmt"
 	"log"
 	"net/http"
 	"os"
+	"v1/app"
+	"v1/public"
 
 	"github.com/anthdm/superkit/kit"
 	"github.com/go-chi/chi/v5"
@@ -14,7 +14,7 @@ import (
 )
 
 func main() {
-	kit.Setup()
+	// kit.Setup()
 	router := chi.NewMux()
 
 	app.InitializeMiddleware(router)
