@@ -54,6 +54,7 @@ module.exports = {
 			},
 			fontFamily: {
 				agrandirWidelight: ['Agrandir-WideLight', ...fontFamily.sans],
+				agrandirWide: ['Agrandir-WideLight', ...fontFamily.sans],
 			}
 		}
 	},

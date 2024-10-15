@@ -63,27 +63,21 @@
 
   @font-face {
     font-family: 'Agrandir-WideLight';
-    src: url('/public/fonts/Agrandir-WideLight.ttf') format('truetype');
+    src: url('/public/fonts/agrandir-wide-bold.ttf') format('truetype');
     font-weight: bold;
     font-style: normal;
   }
 
   @font-face {
     font-family: 'Agrandir-TextBold';
-    src: url('/public/fonts/Agrandir-TextBold.woff') format('woff');
+    src: url('/public/fonts/Agrandir-TextBold.woff') format('truetype');
     font-weight: bold;
     font-style: normal;
   }
 
   .custom-bold {
     -webkit-text-stroke: 0.5px;
-    text-stroke: 1.5px;
+    text-stroke: 0.5px;
   }
-
-  .custom-bold2 {
-    -webkit-text-stroke: 25px;
-    color: transparent;
-    font-weight: bold;
-}
   
 }
