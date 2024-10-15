@@ -1,65 +1,131 @@
 package landing
 
 import (
-	"v1/app/views/layouts"
+    "v1/app/views/layouts"
 )
 
 templ Index() {
-	@layouts.App() {
-		<style>
-			@keyframes changeColor {
-				0% { color: #3b82f6; }
-				25% { color: #8b5cf6; }
-				50% { color: #ec4899; }
-				75% { color: #ef4444; }
-				100% { color: #3b82f6; }
-			}
-			.animated-color {
-				animation: changeColor 8s linear infinite;
-			}
-			.r-box {
-				display: inline-block;
-				padding: 0;
-				line-height: 0.5;
-				border-radius: 20px;
-    			background: linear-gradient(165deg, #121212, #221122);
-			}
-			.r-letter {
-				font-size: 22rem;
-				line-height: 0.75;
-				display: block;
-				margin-top: 0.2em;
-				margin-bottom: -0.02em;
-				margin-right: 0.1em;
-				margin-left: 0.1em;
-			}
-			.try-it-button {
-				background: linear-gradient(to right, #4a00e0, #8e2de2);
-			}
-			.exclusive-button {
-				background-color: black;
-			}
-		</style>
-		<div class="text-center flex flex-col items-center pt-16">
-			<div class="flex flex-col items-center">
-				<div class="relative inline-block mb-2">
-					<div class="r-box">
-						<span class="r-letter font-agrandirWidelight custom-bold2 animated-color">R</span>
-					</div>
-				</div>
-			</div>
-			<div class="mt-4 flex flex-col items-center">
-				<h2 class="max-w-2xl mx-auto text-4xl lg:text-4xl font-agrandirWidelight bold  leading-tight">
-					Data-driven sports betting insights
-				</h2>
-				<h3 class="max-w-2xl mx-auto text-2xl lg:text-2xl leading-tight font-agrandirWidelight text-gray-500 mt-3">
-					AI-Powered Analysis
-				</h3>
-			</div>
-			<div class="flex justify-center mt-6 space-x-4">
-				<a href="#" class="try-it-button w-fit rounded-md px-6 py-2 text-white font-medium text-sm">Try it</a>
-				<a href="https://x.com/RockstakeHQ" target="_blank" class="exclusive-button w-fit rounded-md px-6 py-2 text-white font-agrandirWidelight bold  text-sm">Exclusive on 𝕏 Platform</a>
-			</div>
-		</div>
-	}
+@layouts.App() {
+    <style>
+    .r-box {
+        display: inline-block;
+        padding: 0;
+        line-height: 0.5;
+        border-radius: 20px;
+        background: linear-gradient(165deg, #121212, #221122);
+    }
+    .r-letter {
+        font-size: 18rem;
+        line-height: 0.75;
+        display: block;
+        margin-top: 0.2em;
+        margin-bottom: -0.02em;
+        margin-right: 0.1em;
+        margin-left: 0.1em;
+        color: #ffffff;
+    }
+    .subscribe-button {
+        background: linear-gradient(to right, #4a00e0, #8e2de2);
+    }
+    .view-features-button {
+        background-color: white;
+        color: black;
+    }
+    .league-container {
+        position: relative;
+        height: 1.4em;
+        overflow: hidden;
+        width: 100%;
+        max-width: 100%;
+    }
+    .league-name {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        opacity: 0;
+        animation: rotateLeagues 24s linear infinite;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        white-space: nowrap;
+        transition: color 0.3s ease;
+    }
+    .league-name span {
+        display: inline-block;
+        vertical-align: middle;
+    }
+    .league-name:nth-child(1) { color: #ff4136; animation-delay: 0s; }
+    .league-name:nth-child(2) { color: #ffdc00; animation-delay: 3s; }
+    .league-name:nth-child(3) { color: #0074d9; animation-delay: 6s; }
+    .league-name:nth-child(4) { color: #2ecc40; animation-delay: 9s; }
+    .league-name:nth-child(5) { color: #b10dc9; animation-delay: 12s; }
+    .league-name:nth-child(6) { color: #ff851b; animation-delay: 15s; }
+    .league-name:nth-child(7) { color: #7fdbff; animation-delay: 18s; }
+    .league-name:nth-child(8) { color: #f012be; animation-delay: 21s; }
+
+    @keyframes rotateLeagues {
+        0%, 1.5% { opacity: 0; transform: translateY(100%); }
+        3%, 10.5% { opacity: 1; transform: translateY(0); }
+        12%, 100% { opacity: 0; transform: translateY(-100%); }
+    }
+
+    @media (max-width: 640px) {
+        .league-container {
+            height: 1.5em;
+        }
+        .league-name.text-3xl {
+            font-size: 1rem;
+        }
+        .league-name.text-4xl {
+            font-size: 1.25rem;
+        }
+        .league-name.text-5xl {
+            font-size: 1.5rem;
+        }
+        .league-name.large-text-pl {
+            font-size: 2.3rem;
+        }
+        .league-name.large-text-cl {
+            font-size: 2rem;
+        }
+        .league-name.large-text-el {
+            font-size: 2.4rem;
+        }
+    }
+    </style>
+
+    <div class="text-center flex flex-col items-center pt-16">
+       
+        <div class="flex flex-col items-center w-full space-y-0">
+            <h2 class="max-w-xl mx-auto text-6xl lg:text-8xl font-agrandirWidelight bold leading-tight">
+            <span class="block">AI-Driven Insights for Smarter Betting on</span>
+        </h2>
+       
+            <div class="league-container w-full mx-auto text-5xl lg:text-6xl font-agrandirWidelight bold">
+                <div class="league-name large-text-pl"><span>Premier League</span></div>
+                <div class="league-name"><span>La Liga</span></div>
+                <div class="league-name"><span>Ligue 1</span></div>
+                <div class="league-name"><span>Bundesliga 1</span></div>
+                <div class="league-name"><span>Serie A</span></div>
+                <div class="league-name large-text-cl"><span>Champions League</span></div>
+                <div class="league-name large-text-cl"><span>Conference League</span></div>
+                <div class="league-name large-text-el"><span>Europa League</span></div>
+            </div>
+        </div>
+		<h2 class="max-w-xl mx-auto text-2xl lg:text-2xl font-agrandirWidelight bold text-gray-400 leading-tight mt-16">
+            <span class="block">𝕏 Platform Exclusive</span>
+        </h2>
+        <div class="flex justify-center mt-8 space-x-4">
+            <a href="#" class="subscribe-button w-fit rounded-md px-6 py-2 text-white font-agrandirWidelight text-sm">Subscribe</a>
+            <a href="#" class="view-features-button w-fit rounded-md px-6 py-2 text-black font-agrandirWidelight bold text-sm flex items-center">
+                View All Features
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-2" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+            </a>
+        </div>
+    </div>
+}
 }
