@@ -11,7 +11,6 @@ import { Section, Container } from "@/components/craft";
 import { Button } from "@/components/ui/button";
 
 // Asset imports
-// import Logo from "@/public/logo.svg";
 
 const Hero = () => {
   return (
