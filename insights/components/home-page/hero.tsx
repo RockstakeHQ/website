@@ -1,48 +1,69 @@
-// React and Next.js imports
+"use client";
+
+import React, { useState, useEffect } from 'react';
 import Link from "next/link";
 import Image from "next/image";
-
-// Third-party library imports
 import Balancer from "react-wrap-balancer";
 import { Camera } from "lucide-react";
-
-// Local component imports
 import { Section, Container } from "@/components/craft";
 import { Button } from "@/components/ui/button";
-
-// Asset imports
+import { agrandirWideBold, agrandirWideLight, agrandirRegular } from '@/app/fonts';
 
 const Hero = () => {
+  const [currentText, setCurrentText] = useState('Football');
+  const [currentColor, setCurrentColor] = useState('#FFFFFF'); // Inițial setăm culoarea
+  const texts = ['Football', 'Tennis', 'Basketball', 'Hockey', 'Baseball','Esports'];
+  const colors = ['#FFFFFF', '#33FF57', '#FFA100', '#5CE1E6', '#FF3131', '#A833FF']; // Culori diferite pentru fiecare text
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentText(prevText => {
+        const currentIndex = texts.indexOf(prevText);
+        const nextIndex = (currentIndex + 1) % texts.length;
+        setCurrentColor(colors[nextIndex]); // Actualizează culoarea în funcție de textul curent
+        return texts[nextIndex];
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [texts, colors]);
+
   return (
     <Section>
       <Container className="flex flex-col items-center text-center">
-      <h4 className="!mb-0">
+        <h2 className={`${agrandirWideBold.className} text-5xl mb-8`}>
           <Balancer>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            AI-Driven Insights for Smarter Betting on
+          </Balancer>
+        </h2>
+        <h2 className={`${agrandirWideBold.className} text-5xl mb-8`} style={{ color: currentColor }}>
+          <Balancer>
+            {currentText}
+          </Balancer>
+        </h2>
+        <h4 className={`${agrandirRegular.className} text-lg mb-8 text-gray-400`}>
+          <Balancer>
+          Leverage cutting-edge AI algorithms and comprehensive sports data to elevate your betting strategy across multiple disciplines
           </Balancer>
         </h4>
-        <h1 className="!mb-0">
+        <h4 className={`${agrandirWideBold.className} text-lg mb-0`}>
           <Balancer>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            🔥 Exclusive content on 𝕏 🔥 
           </Balancer>
-        </h1>
-        <h3 className="text-muted-foreground">
-          <Balancer>
-            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-            nisi ut aliquip ex ea commodo consequat.
-          </Balancer>
-        </h3>
+        </h4>
         <div className="not-prose mt-6 flex gap-2 md:mt-12">
-          <Button asChild>
-            <Link href="/">
-              <Camera className="mr-2" />
-              Lorem Ipsum
-            </Link>
-          </Button>
-          <Button variant={"ghost"} asChild>
-            <Link href="/posts">Dolor Sit Amet -{">"}</Link>
-          </Button>
-        </div>
+        {/* Primul buton - gri închis cu text alb */}
+        <Button asChild className="bg-gray-800 text-white hover:bg-gray-700">
+          <Link href="/">
+            View Details
+          </Link>
+        </Button>
+
+        {/* Al doilea buton - gradient albastru cu mov deschis și text negru */}
+        <Button asChild className="bg-gradient-to-r from-purple-500 to-blue-500 text-black hover:from-blue-800 hover:to-purple-800">
+          <Link href="/posts">Subscribe -{">"}</Link>
+        </Button>
+      </div>
       </Container>
     </Section>
   );

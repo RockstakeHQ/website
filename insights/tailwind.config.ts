@@ -55,7 +55,12 @@ const config: Config = {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
-  		}
+  		},
+		fontFamily: {
+			'agrandir-wide-bold': ['var(--font-agrandir-wide-bold)'],
+			'agrandir-wide-light': ['var(--font-agrandir-wide-light)'],
+			'agrandir-regular': ['var(--font-agrandir-regular)']
+		},
   	}
   },
   plugins: [require("tailwindcss-animate"), require("tailwindcss-animate"), require("@tailwindcss/typography")],

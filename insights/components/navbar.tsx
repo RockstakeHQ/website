@@ -5,15 +5,14 @@ import Link from "next/link"
 import * as React from "react"
 import { Button } from "./ui/button"
 import { NavigationMenu, NavigationMenuLink, NavigationMenuList } from "./ui/navigation-menu"
+import { agrandirWideBold, agrandirWideLight, agrandirRegular } from '@/app/fonts'
 
 export function NavBar() {
   const [isOpen, setIsOpen] = React.useState(false)
   const menuItems = [
-    { name: "Home", href: "/" },
-    { name: "Software", href: "/software" },
-    { name: "Automation", href: "/automation" },
-    { name: "Blog", href: "/blog" },
-    { name: "Projects", href: "/projects" }
+    { name: "Articles", href: "/software" },
+    { name: "Community", href: "/automation" },
+    { name: "About", href: "/blog" },
   ]
 
   return (
@@ -24,7 +23,7 @@ export function NavBar() {
             <NavigationMenu>
               <NavigationMenuList>
                 <Link href="/" className="pl-2">
-                  <h1 className="font-bold">Rockstake</h1>
+                  <h1 className={`font-bold ${agrandirWideBold.className} text-lg`}>Rockstake</h1>
                 </Link>
               </NavigationMenuList>
             </NavigationMenu>
@@ -32,7 +31,7 @@ export function NavBar() {
               <div className="max-[825px]:hidden">
                 {menuItems.slice(1).map((item) => (
                   <Link key={item.name} href={item.href}>
-                    <Button variant="ghost">{item.name}</Button>
+                    <Button variant="ghost" className={agrandirWideLight.className}>{item.name}</Button>
                   </Link>
                 ))}
               </div>
@@ -54,13 +53,13 @@ export function NavBar() {
           </div>
         </div>
         {isOpen && (
-          <div className="absolute left-0 right-0 mb-0 bg-white dark:bg-black shadow-lg">
+          <div className="absolute left-0 right-0 top-24 mt-0 bg-white dark:bg-black shadow-lg">
             <div className="py-2 md:w-[720px] w-[95%] mx-auto">
               {menuItems.map((item) => (
                 <Link
                   key={item.name}
                   href={item.href}
-                  className="block px-6 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800"
+                  className={`block px-6 py-2 text-sm text-gray-100 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-900 ${agrandirWideLight.className}`}
                   onClick={() => setIsOpen(false)}
                 >
                   {item.name}
