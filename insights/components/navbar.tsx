@@ -43,22 +43,22 @@ export function NavBar() {
           </Link>
 
           <div className="hidden md:flex items-center space-x-6 h-full">
-            {menuItems.map((item) => (
-              <div key={item.name} className="relative group h-full flex items-center">
-                <Button
-                  variant="ghost"
-                  className={`
-                    ${geistMedium.className}
-  
-                    text-white hover:text-gray-300 
-                    w-full text-left py-4 px-0
-                    transition-colors duration-200
-                  `}                >
-                  {item.name}
-                </Button>
-                <div className="absolute bottom-0 left-0 w-full h-0.5 bg-gray-600 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-              </div>
-            ))}
+          {menuItems.map((item) => (
+  <div key={item.name} className="border-black">
+    <button
+      className={`
+        ${geistRegular.className}
+        w-full text-left py-3 px-0 text-base
+        transition-colors duration-200
+        group
+      `}
+    >
+      <span className="text-gray-400 group-hover:text-white transition-colors duration-200">
+        {item.name}
+      </span>
+    </button>
+  </div>
+))}
           </div>
 
           <div className="hidden md:flex items-center space-x-4">
@@ -96,7 +96,8 @@ className={`
           <Button
             variant="ghost"
             size="icon"
-            className="md:hidden text-white h-full"
+            className="md:hidden text-white h-full    transition-all duration-200 ease-in-out
+                  hover:bg-black"
             onClick={() => setIsOpen(!isOpen)}
           >
             {isOpen ? <XIcon className="h-6 w-6" /> : <MenuIcon className="h-6 w-6" />}
@@ -159,9 +160,10 @@ className={`
         ${geistRegular.className}
         w-full text-left py-3 px-0 text-base
         transition-colors duration-200
+        group
       `}
     >
-      <span className="text-gray-400 hover:text-white transition-colors duration-200">
+      <span className="text-gray-400 group-hover:text-white transition-colors duration-200">
         {item.name}
       </span>
     </button>
