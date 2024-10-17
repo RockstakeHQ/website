@@ -9,6 +9,7 @@ import {
   geistBold,
   geistMonoBold,
   geistMedium,
+  geistSemiBold,
 } from "@/app/fonts";
 
 export function NavBar() {
@@ -29,8 +30,17 @@ export function NavBar() {
       document.body.style.overflow = "auto";
     }
 
+    const handleResize = () => {
+      if (window.innerWidth >= 768 && isOpen) {
+        setIsOpen(false);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+
     return () => {
       document.body.style.overflow = "auto";
+      window.removeEventListener('resize', handleResize);
     };
   }, [isOpen]);
 
@@ -43,29 +53,29 @@ export function NavBar() {
           </Link>
 
           <div className="hidden md:flex items-center space-x-6 h-full">
-          {menuItems.map((item) => (
-  <div key={item.name} className="border-black">
-    <button
-      className={`
-        ${geistRegular.className}
-        w-full text-left py-3 px-0 text-base
-        transition-colors duration-200
-        group
-      `}
-    >
-      <span className="text-gray-400 group-hover:text-white transition-colors duration-200">
-        {item.name}
-      </span>
-    </button>
-  </div>
-))}
+            {menuItems.map((item) => (
+              <div key={item.name} className="border-black">
+                <button
+                  className={`
+                    ${geistRegular.className}
+                    w-full text-left py-3 px-0 text-base
+                    transition-colors duration-200
+                    group
+                  `}
+                >
+                  <span className="text-gray-400 group-hover:text-white transition-colors duration-200">
+                    {item.name}
+                  </span>
+                </button>
+              </div>
+            ))}
           </div>
 
           <div className="hidden md:flex items-center space-x-4">
             <Button
               variant="ghost"
               className={`
-                ${geistBold.className} 
+                ${geistSemiBold.className} 
                 bg-black
                 text-white border-gray-600 px-6 py-6
                 w-full
@@ -75,20 +85,21 @@ export function NavBar() {
                 active:bg-white/10
                 outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-600
               `}
-                          >
+            >
               Log In
             </Button>
             <Button
-className={`
-  ${geistBold.className}
-  bg-[#AC00C2] text-white px-4 py-4
-  w-full
-  rounded-lg
-  transition-all duration-200 ease-in-out
-  hover:bg-[#AC00C2]/80 focus:bg-[#AC00C2]/80
-  active:bg-[#AC00C2]/70
-  outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#AC00C2]
-`}            >
+              className={`
+                ${geistSemiBold.className}
+                bg-[#AC00C2] text-white px-4 py-4
+                w-full
+                rounded-lg
+                transition-all duration-200 ease-in-out
+                hover:bg-[#AC00C2]/80 focus:bg-[#AC00C2]/80
+                active:bg-[#AC00C2]/70
+                outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#AC00C2]
+              `}
+            >
               Subscribe
             </Button>
           </div>
@@ -96,8 +107,7 @@ className={`
           <Button
             variant="ghost"
             size="icon"
-            className="md:hidden text-white h-full    transition-all duration-200 ease-in-out
-                  hover:bg-black"
+            className="md:hidden text-white h-full transition-all duration-200 ease-in-out hover:bg-black"
             onClick={() => setIsOpen(!isOpen)}
           >
             {isOpen ? <XIcon className="h-6 w-6" /> : <MenuIcon className="h-6 w-6" />}
@@ -106,7 +116,7 @@ className={`
       </div>
 
       {isOpen && (
-        <div className="fixed inset-0 z-40 bg-black text-white overflow-y-auto">
+        <div className="fixed inset-0 z-40 bg-black text-white overflow-y-auto md:hidden">
           <div className="flex flex-col">
             <div className="flex items-center justify-between px-4 md:px-6 lg:px-8 h-16 border-b border-gray-800">
               <Link href="/" className="flex items-center h-full">
@@ -122,9 +132,9 @@ className={`
               </Button>
             </div>
             <div className="flex flex-col px-4 md:px-6 lg:px-6 space-y-4 py-4">
-            <button
+              <button
                 className={`
-                  ${geistBold.className}
+                  ${geistSemiBold.className}
                   bg-[#AC00C2] text-white px-4 py-4
                   w-full
                   rounded-lg
@@ -138,37 +148,37 @@ className={`
                 Subscribe on 𝕏
               </button>
               <Button
-  variant="outline"
-  className={`
-    ${geistBold.className} 
-    bg-black
-    text-white border-gray-600 px-6 py-6 text-sm
-    w-full
-    rounded-lg
-    transition-all duration-200 ease-in-out
-    hover:bg-white/5 focus:bg-white/5
-    active:bg-white/10
-    outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-600
-  `}
->
-  Log In
-</Button>
-{menuItems.map((item) => (
-  <div key={item.name} className="border-b border-gray-850">
-    <button
-      className={`
-        ${geistRegular.className}
-        w-full text-left py-3 px-0 text-base
-        transition-colors duration-200
-        group
-      `}
-    >
-      <span className="text-gray-400 group-hover:text-white transition-colors duration-200">
-        {item.name}
-      </span>
-    </button>
-  </div>
-))}
+                variant="outline"
+                className={`
+                  ${geistSemiBold.className} 
+                  bg-black
+                  text-white border-gray-600 px-6 py-6 text-sm
+                  w-full
+                  rounded-lg
+                  transition-all duration-200 ease-in-out
+                  hover:bg-white/5 focus:bg-white/5
+                  active:bg-white/10
+                  outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-600
+                `}
+              >
+                Log In
+              </Button>
+              {menuItems.map((item) => (
+                <div key={item.name} className="border-b border-gray-850">
+                  <button
+                    className={`
+                      ${geistRegular.className}
+                      w-full text-left py-3 px-0 text-base
+                      transition-colors duration-200
+                      group
+                    `}
+                  >
+                    <span className="text-gray-400 group-hover:text-white transition-colors duration-200">
+                      {item.name}
+                    </span>
+                  </button>
+                </div>
+              ))}
             </div>
           </div>
         </div>
