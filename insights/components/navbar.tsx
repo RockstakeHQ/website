@@ -15,12 +15,11 @@ export function NavBar() {
   const [isOpen, setIsOpen] = React.useState(false);
 
   const menuItems = [
-    { name: "Products", href: "#" },
-    { name: "Solutions", href: "#" },
-    { name: "Resources", href: "#" },
-    { name: "Docs", href: "/docs" },
-    { name: "Pricing", href: "/pricing" },
-    { name: "Contact", href: "/contact" },
+    { name: "Football", href: "#" },
+    { name: "Esports", href: "#" },
+    { name: "Pricing", href: "#" },
+    { name: "Contact", href: "#" },
+    { name: "About", href: "#" },
   ];
 
   React.useEffect(() => {
@@ -48,8 +47,13 @@ export function NavBar() {
               <div key={item.name} className="relative group h-full flex items-center">
                 <Button
                   variant="ghost"
-                  className={`${geistRegular.className} text-white hover:text-gray-300 px-4 h-full`}
-                >
+                  className={`
+                    ${geistMedium.className}
+  
+                    text-white hover:text-gray-300 
+                    w-full text-left py-4 px-0
+                    transition-colors duration-200
+                  `}                >
                   {item.name}
                 </Button>
                 <div className="absolute bottom-0 left-0 w-full h-0.5 bg-gray-600 opacity-0 group-hover:opacity-100 transition-opacity"></div>
@@ -60,14 +64,32 @@ export function NavBar() {
           <div className="hidden md:flex items-center space-x-4">
             <Button
               variant="ghost"
-              className={`${geistRegular.className} text-white hover:text-gray-300 px-6 py-2`}
-            >
+              className={`
+                ${geistBold.className} 
+                bg-black
+                text-white border-gray-600 px-6 py-6
+                w-full
+                rounded-lg
+                transition-all duration-200 ease-in-out
+                hover:bg-white/5 focus:bg-white/5
+                active:bg-white/10
+                outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-600
+              `}
+                          >
               Log In
             </Button>
             <Button
-              className={`${geistBold.className} bg-white text-black hover:bg-gray-200 px-6 py-2`}
-            >
-              Sign Up
+className={`
+  ${geistBold.className}
+  bg-[#AC00C2] text-white px-4 py-4
+  w-full
+  rounded-lg
+  transition-all duration-200 ease-in-out
+  hover:bg-[#AC00C2]/80 focus:bg-[#AC00C2]/80
+  active:bg-[#AC00C2]/70
+  outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#AC00C2]
+`}            >
+              Subscribe
             </Button>
           </div>
 
@@ -98,28 +120,53 @@ export function NavBar() {
                 <XIcon className="h-6 w-6" />
               </Button>
             </div>
-            <div className="flex flex-col px-4 md:px-6 lg:px-8 space-y-4 py-4">
-              <Button
-                className={`${geistMonoBold.className} bg-[#AC00C2] text-white hover:bg-opacity-80 transition-colors duration-200 px-6 py-6`}
-                >
-                Subscribe on 𝕏
-              </Button>
-              <Button
-                variant="outline"
-                className={`${geistMonoBold.className} text-white border-gray-600 px-6 py-6`}
+            <div className="flex flex-col px-4 md:px-6 lg:px-6 space-y-4 py-4">
+            <button
+                className={`
+                  ${geistBold.className}
+                  bg-[#AC00C2] text-white px-4 py-4
+                  w-full
+                  rounded-lg
+                  text-sm
+                  transition-all duration-200 ease-in-out
+                  hover:bg-[#AC00C2]/80 focus:bg-[#AC00C2]/80
+                  active:bg-[#AC00C2]/70
+                  outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#AC00C2]
+                `}
               >
-                Log In
-              </Button>
-              {menuItems.map((item) => (
-                <div key={item.name} className="border-b border-gray-600">
-                  <Button
-                    variant="ghost"
-                    className={`${geistMedium.className} text-white hover:text-gray-300 w-full justify-start py-4 px-0`}
-                  >
-                    {item.name}
-                  </Button>
-                </div>
-              ))}
+                Subscribe on 𝕏
+              </button>
+              <Button
+  variant="outline"
+  className={`
+    ${geistBold.className} 
+    bg-black
+    text-white border-gray-600 px-6 py-6 text-sm
+    w-full
+    rounded-lg
+    transition-all duration-200 ease-in-out
+    hover:bg-white/5 focus:bg-white/5
+    active:bg-white/10
+    outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-600
+  `}
+>
+  Log In
+</Button>
+{menuItems.map((item) => (
+  <div key={item.name} className="border-b border-gray-850">
+    <button
+      className={`
+        ${geistRegular.className}
+        w-full text-left py-3 px-0 text-base
+        transition-colors duration-200
+      `}
+    >
+      <span className="text-gray-400 hover:text-white transition-colors duration-200">
+        {item.name}
+      </span>
+    </button>
+  </div>
+))}
             </div>
           </div>
         </div>
