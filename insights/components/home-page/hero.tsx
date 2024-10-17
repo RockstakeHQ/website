@@ -32,7 +32,7 @@ const Hero = () => {
               outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#AC00C2]`
             )}
           >
-            Subscribe
+            Subscribe ✪
           </Button>
           <Button
             className={cn(
@@ -46,7 +46,7 @@ const Hero = () => {
               outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-600`
             )}
           >
-            Explore
+            Explore ⇨
           </Button>
         </div>
       </Container>

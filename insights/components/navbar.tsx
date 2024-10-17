@@ -4,12 +4,15 @@ import { XIcon, MenuIcon } from "lucide-react";
 import Link from "next/link";
 import * as React from "react";
 import { Button } from "./ui/button";
+import { Section, Container } from "@/components/craft";
 import {
   geistRegular,
   geistBold,
   geistMonoBold,
   geistMedium,
   geistSemiBold,
+  geistBlack,
+  geistMonoMedium,
 } from "@/app/fonts";
 
 export function NavBar() {
@@ -46,10 +49,12 @@ export function NavBar() {
 
   return (
     <>
-      <div className="fixed top-0 left-0 right-0 z-50 bg-black text-white">
-        <div className="flex items-center justify-between px-4 md:px-6 lg:px-8 max-w-7xl mx-auto h-16">
+        <Section>
+
+      <div className="fixed top-0 left-0 right-0 z-50 text-white">
+        <div className="flex items-center justify-between bg-opacity-100 px-4 md:px-6 lg:px-8 max-w-7xl mx-auto h-16">
           <Link href="/" className="flex items-center h-full">
-            <h1 className={`${geistBold.className} text-xl`}>Rockstake</h1>
+            <h1 className={`${geistBold.className} text-2xl`}>Rockstake</h1>
           </Link>
 
           <div className="hidden md:flex items-center space-x-6 h-full">
@@ -183,6 +188,8 @@ export function NavBar() {
           </div>
         </div>
       )}
+          </Section>
+
     </>
   );
 }
