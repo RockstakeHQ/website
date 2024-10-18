@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { Section, Container } from "@/components/craft";
-import { geistSemiBold, geistRegular } from '@/app/fonts';
+import { geistSemiBold, geistRegular, geistLight, geistMonoRegular, geistMedium } from '@/app/fonts';
 
 const sports = [
   { name: 'Bundesliga 1', src: '/football/bundesliga_1.svg' },
@@ -25,57 +25,57 @@ const esports = [
 ];
 
 const Sports = () => {
-    const [activeCategory, setActiveCategory] = useState('football');
-  
-    return (
-      <Section className="bg-black text-white">
-        <Container className="py-12 px-0 md:px-0 lg:px-0">
-          <div className="max-w-6xl mx-auto"> {/* Wrapper pentru conținut */}
-            <p className={`${geistRegular.className} text-lg mb-4 text-center w-full`}>
-              Elevate your gaming experience with Rockstake's comprehensive range of betting options.
-              From the thrill of traditional sports to the excitement of competitive gaming, we offer
-              a diverse selection of markets to suit every enthusiast.
-            </p>
-            <div className="flex justify-center space-x-16 mb-4">
-              <span
-                onClick={() => setActiveCategory('football')}
-                className={`${geistSemiBold.className} text-xl cursor-pointer transition-colors duration-300 ${
-                  activeCategory === 'football' ? 'text-white' : 'text-gray-500 hover:text-gray-300'
-                }`}
-              >
-                Football
-              </span>
-              <span
-                onClick={() => setActiveCategory('esports')}
-                className={`${geistSemiBold.className} text-xl cursor-pointer transition-colors duration-300 ${
-                  activeCategory === 'esports' ? 'text-white' : 'text-gray-500 hover:text-gray-300'
-                }`}
-              >
-                Esports
-              </span>
-            </div>
-            <div className={`grid gap-8 w-full justify-items-center ${
-              activeCategory === 'football' 
-                ? 'grid-cols-2 md:grid-cols-3 lg:grid-cols-5' 
-                : 'grid-cols-2 md:grid-cols-4'
-            }`}>
-              {(activeCategory === 'football' ? sports : esports).map(({ name, src }) => (
-                <div key={name} className="flex items-center justify-center">
-                  <Image
-                    src={src}
-                    alt={name}
-                    width={96}
-                    height={96}
-                    className="opacity-100 hover:opacity-80 transition-opacity"
-                    priority
-                  />
-                </div>
-              ))}
-            </div>
+  const [activeCategory, setActiveCategory] = useState('football');
+
+  return (
+    <Section className="">
+      <Container className="py-4 md:py-8 px-0 md:px-0 lg:px-0"> {/* Adjusted padding for mobile */}
+        <div className="max-w-6xl mx-auto">
+          <p className={`${geistMonoRegular.className} text-base md:text-lg mb-2 text-center w-full text-gray-500`}>
+            Elevate your gaming experience with Rockstake's comprehensive range of betting options.
+            From the thrill of traditional sports to the excitement of competitive gaming, we offer
+            a diverse selection of markets to suit every enthusiast.
+          </p>
+          <div className="flex justify-center space-x-16 md:space-x-32 mb-4 md:mb-8 mt-16 md:mt-16"> {/* Adjusted spacing for mobile */}
+            <span
+              onClick={() => setActiveCategory('football')}
+              className={`${geistMedium.className} text-lg md:text-lg cursor-pointer transition-colors duration-300 ${
+                activeCategory === 'football' ? 'text-white' : 'text-gray-500 hover:text-gray-300'
+              }`}
+            >
+              Football
+            </span>
+            <span
+              onClick={() => setActiveCategory('esports')}
+              className={`${geistSemiBold.className} text-lg md:text-lg cursor-pointer transition-colors duration-300 ${
+                activeCategory === 'esports' ? 'text-white' : 'text-gray-500 hover:text-gray-300'
+              }`}
+            >
+              Esports
+            </span>
           </div>
-        </Container>
-      </Section>
-    );
-  };
-  
-  export default Sports;
+          <div className={`grid gap-4 md:gap-8 w-full justify-items-center ${
+            activeCategory === 'football'
+              ? 'grid-cols-3 md:grid-cols-3 lg:grid-cols-5'
+              : 'grid-cols-2 md:grid-cols-4'
+          }`}>
+            {(activeCategory === 'football' ? sports : esports).map(({ name, src }) => (
+              <div key={name} className="flex items-center justify-center">
+                <Image
+                  src={src}
+                  alt={name}
+                  width={64}
+                  height={64}
+                  className="w-20  h-20 md:w-24 md:h-24 opacity-100 hover:opacity-80 transition-opacity"
+                  priority
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </Container>
+    </Section>
+  );
+};
+
+export default Sports;
