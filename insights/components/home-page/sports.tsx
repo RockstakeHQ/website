@@ -1,8 +1,8 @@
 "use client";
-
 import { useState } from 'react';
 import Image from 'next/image';
 import { Section, Container } from "@/components/craft";
+import { geistSemiBold, geistRegular } from '@/app/fonts';
 
 const sports = [
   { name: 'Bundesliga 1', src: '/football/bundesliga_1.svg' },
@@ -25,50 +25,57 @@ const esports = [
 ];
 
 const Sports = () => {
-  const [activeCategory, setActiveCategory] = useState('football');
-
-  return (
-    <Section className="bg-black text-white">
-      <Container className="py-12">
-        <p className="text-lg mb-16 top-6">
-          Elevate your gaming experience with Rockstake's comprehensive range of betting options. 
-          From the thrill of traditional sports to the excitement of competitive gaming, we offer 
-          a diverse selection of markets to suit every enthusiast.
-        </p>
-        <div className="flex space-x-4 mb-8">
-          <button
-            onClick={() => setActiveCategory('football')}
-            className={`px-6 py-2 rounded-full ${
-              activeCategory === 'football' ? 'bg-white text-black' : 'bg-gray-800 text-white'
-            }`}
-          >
-            Football
-          </button>
-          <button
-            onClick={() => setActiveCategory('esports')}
-            className={`px-6 py-2 rounded-full ${
-              activeCategory === 'esports' ? 'bg-white text-black' : 'bg-gray-800 text-white'
-            }`}
-          >
-            Esports
-          </button>
-        </div>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
-          {(activeCategory === 'football' ? sports : esports).map(({ name, src }) => (
-            <div key={name} className="flex items-center justify-center">
-              <Image
-                src={src}
-                alt={name}
-                width={96}
-                height={96}
-                className="opacity-100 hover:opacity-80 transition-opacity"
-              />
+    const [activeCategory, setActiveCategory] = useState('football');
+  
+    return (
+      <Section className="bg-black text-white">
+        <Container className="py-12 px-0 md:px-0 lg:px-0">
+          <div className="max-w-6xl mx-auto"> {/* Wrapper pentru conținut */}
+            <p className={`${geistRegular.className} text-lg mb-4 text-center w-full`}>
+              Elevate your gaming experience with Rockstake's comprehensive range of betting options.
+              From the thrill of traditional sports to the excitement of competitive gaming, we offer
+              a diverse selection of markets to suit every enthusiast.
+            </p>
+            <div className="flex justify-center space-x-16 mb-4">
+              <span
+                onClick={() => setActiveCategory('football')}
+                className={`${geistSemiBold.className} text-xl cursor-pointer transition-colors duration-300 ${
+                  activeCategory === 'football' ? 'text-white' : 'text-gray-500 hover:text-gray-300'
+                }`}
+              >
+                Football
+              </span>
+              <span
+                onClick={() => setActiveCategory('esports')}
+                className={`${geistSemiBold.className} text-xl cursor-pointer transition-colors duration-300 ${
+                  activeCategory === 'esports' ? 'text-white' : 'text-gray-500 hover:text-gray-300'
+                }`}
+              >
+                Esports
+              </span>
             </div>
-          ))}
-        </div>
-      </Container>
-    </Section>
-  );
-};
-
-export default Sports;
+            <div className={`grid gap-8 w-full justify-items-center ${
+              activeCategory === 'football' 
+                ? 'grid-cols-2 md:grid-cols-3 lg:grid-cols-5' 
+                : 'grid-cols-2 md:grid-cols-4'
+            }`}>
+              {(activeCategory === 'football' ? sports : esports).map(({ name, src }) => (
+                <div key={name} className="flex items-center justify-center">
+                  <Image
+                    src={src}
+                    alt={name}
+                    width={96}
+                    height={96}
+                    className="opacity-100 hover:opacity-80 transition-opacity"
+                    priority
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </Container>
+      </Section>
+    );
+  };
+  
+  export default Sports;

@@ -6,17 +6,28 @@ import Footer from "@/components/home-page/footer";
 import Hero from "@/components/home-page/hero";
 import Sports from "@/components/home-page/sports";
 
+const Divider = () => (
+  <div className="w-full max-w-screen-xl mx-auto px-5">
+    <hr className="border-t border-gray-800 my-8" /> {/* Reduced from my-16 to my-8 */}
+  </div>
+);
+
 export default function Page() {
   return (
     <Main>
       <Section>
         <Container>
-         <Hero/>
-         <Sports/>
-         <FeatureLeft/>
-         <FeatureRight/>
-         <CTA/>
-         <Footer/>
+          <Hero />
+          <Divider />
+          <Sports />
+          <Divider />
+          <FeatureLeft />
+          <Divider />
+          <FeatureRight />
+          <Divider />
+          <CTA />
+          <Divider />
+          <Footer />
         </Container>
       </Section>
     </Main>
