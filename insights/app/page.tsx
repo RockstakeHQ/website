@@ -4,6 +4,7 @@ import FeatureLeft from "@/components/home-page/feature-left";
 import FeatureRight from "@/components/home-page/feature-right";
 import Footer from "@/components/home-page/footer";
 import Hero from "@/components/home-page/hero";
+import Sports from "@/components/home-page/sports";
 
 export default function Page() {
   return (
@@ -11,6 +12,7 @@ export default function Page() {
       <Section>
         <Container>
          <Hero/>
+         <Sports/>
          <FeatureLeft/>
          <FeatureRight/>
          <CTA/>

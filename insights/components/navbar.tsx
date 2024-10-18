@@ -54,7 +54,7 @@ export function NavBar() {
       <div className="fixed top-0 left-0 right-0 z-50 text-white">
         <div className="flex items-center justify-between bg-opacity-100 px-4 md:px-6 lg:px-8 max-w-7xl mx-auto h-16">
           <Link href="/" className="flex items-center h-full">
-            <h1 className={`${geistBold.className} text-2xl`}>Rockstake</h1>
+            <h1 className={`${geistBold.className} text-lg`}>Rockstake</h1>
           </Link>
 
           <div className="hidden md:flex items-center space-x-6 h-full">

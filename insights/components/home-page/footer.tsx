@@ -1,8 +1,8 @@
 import React from 'react';
 import Image from 'next/image';
 import { Section, Container } from "@/components/craft";
-import GithubIcon from "@/public/github.svg";
-import TwitterIcon from "@/public/twitter.svg";
+import GithubIcon from "@/public/channels/github.svg";
+import TwitterIcon from "@/public/channels/twitter.svg";
 import { geistSemiBold, geistBold, geistRegular, geistLight } from '@/app/fonts';
 
 const Footer = () => {
