@@ -12,7 +12,7 @@ const Hero = () => {
         <h2 className={`${geistBold.className} text-4xl md:text-6xl lg:text-7xl xl:text-7xl mb-6 text-white mt-24 md:mt-32 w-full px-0`}>
           <span className="block md:inline">The Quantum-Betting Accelerator</span>
         </h2>
-        <h5 className={`${geistMonoRegular.className} text-lg md:text-xl mb-8 text-gray-500 w-full max-w-3xl`}>
+        <h5 className={`${geistMonoRegular.className} text-lg md:text-xl mb-8 text-gray-400 w-full max-w-3xl`}>
           Rockstake harnesses state-of-the-art AI to decode 𝕏 sentiment, converting social media buzz into precise betting intelligence.
         </h5>
         <h5 className={`${geistMonoSemiBold.className} text-sm mb-6 bg-[#090909] text-white px-4 py-2 rounded-full inline-flex items-center border border-[#333333]`}>

@@ -11,10 +11,8 @@ const sports = [
   { name: 'Europa League', src: '/football/europa_league.svg' },
   { name: 'La Liga', src: '/football/la_liga.svg' },
   { name: 'Ligue 1', src: '/football/ligue_1.svg' },
-  { name: 'Nations League', src: '/football/nations_league.svg' },
   { name: 'Premier League', src: '/football/premier_league.svg' },
   { name: 'Serie A', src: '/football/serie_a.svg' },
-  { name: 'World Cup', src: '/football/world_cup.svg' },
 ];
 
 const esports = [
@@ -29,7 +27,7 @@ const Sports = () => {
 
   return (
     <Section className="">
-      <Container className="py-4 md:py-8 px-0 md:px-0 lg:px-0"> {/* Adjusted padding for mobile */}
+      <Container className="py-4 md:py-2 px-0 md:px-0 lg:px-4"> {/* Adjusted padding for mobile */}
         <div className="max-w-6xl mx-auto">
           <p className={`${geistMonoRegular.className} text-base md:text-lg mb-2 text-center w-full text-gray-500`}>
             Elevate your gaming experience with Rockstake's comprehensive range of betting options.
@@ -54,9 +52,9 @@ const Sports = () => {
               Esports
             </span>
           </div>
-          <div className={`grid gap-4 md:gap-8 w-full justify-items-center ${
+          <div className={`grid gap-2 md:gap-8 w-full justify-items-center ${
             activeCategory === 'football'
-              ? 'grid-cols-3 md:grid-cols-3 lg:grid-cols-5'
+              ? 'grid-cols-2 md:grid-cols-3 lg:grid-cols-5'
               : 'grid-cols-2 md:grid-cols-4'
           }`}>
             {(activeCategory === 'football' ? sports : esports).map(({ name, src }) => (
