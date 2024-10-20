@@ -14,8 +14,8 @@ const Footer = () => {
             <div className="mb-6 md:mb-0 md:w-1/3">
               <h2 className={`${geistSemiBold.className} text-xl md:text-lg font-bold mb-0 md:mb-0`}>Rockstake</h2>
               <div className="flex space-x-4 mb-2 md:mb-0">
-                <Image src={TwitterIcon} alt="Twitter" width={20} height={20} className="text-gray-400 hover:text-white cursor-pointer" />
-                <Image src={GithubIcon} alt="GitHub" width={20} height={20} className="text-gray-400 hover:text-white cursor-pointer" />
+                <Image src={TwitterIcon} alt="Twitter" width={24} height={24} className="text-gray-400 hover:text-white cursor-pointer" />
+                <Image src={GithubIcon} alt="GitHub" width={24} height={24} className="text-gray-400 hover:text-white cursor-pointer" />
               </div>
             </div>
             <div className="flex flex-col md:flex-row md:space-x-12 md:w-2/3 md:justify-end">
