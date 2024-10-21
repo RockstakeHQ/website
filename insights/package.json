@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "export-jpg": "NODE_OPTIONS='--experimental-specifier-resolution=node' ts-node --compiler-options '{\"module\":\"CommonJS\",\"jsx\":\"react\"}' -r tsconfig-paths/register scripts/exportToJpg.ts"
+    "export-jpg": "NODE_OPTIONS='--experimental-specifier-resolution=node --loader ts-node/esm' ts-node --esm scripts/exportToJpg.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
