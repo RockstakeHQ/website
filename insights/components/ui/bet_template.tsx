@@ -21,19 +21,34 @@ const BettingTips = () => {
   ];
 
   return (
-    <div className="bg-black text-white p-8 font-mono" style={{width: '1600px', height: '900px'}}>
-      {meciuri.map((meci, index) => (
-        <div key={index} className="mb-16">
-          <div className="text-xl font-bold mb-2">{meci.tara} - {meci.competitie}</div>
-          <div className="text-2xl font-semibold mb-2">
-            {meci.echipaAcasa} vs {meci.echipaDepalsare}
-          </div>
-          <div className="flex justify-between items-center text-xl">
-            <span className="text-green-400">Pronostic: {meci.pronostic}</span>
-            <span className="font-bold">@{meci.cota.toFixed(2)}</span>
-          </div>
-        </div>
-      ))}
+    <div 
+      className="text-white font-mono flex items-center justify-center bg-cover bg-center"
+      style={{
+        width: '1600px', 
+        height: '900px',
+        backgroundImage: 'url("@/public/betslip_background.png")',
+        backgroundColor: '#000'
+      }}
+    >
+      <div className="bg-black bg-opacity-80 p-8 rounded-lg shadow-lg max-w-3xl">
+        {meciuri.map((meci, index) => (
+          <React.Fragment key={index}>
+            <div className="mb-6">
+              <div className="text-3xl font-bold mb-2">{meci.tara} - {meci.competitie}</div>
+              <div className="text-4xl font-semibold mb-2">
+                {meci.echipaAcasa} vs {meci.echipaDepalsare}
+              </div>
+              <div className="flex justify-between items-center text-3xl">
+                <span className="text-green-400 font-bold">Pronostic: {meci.pronostic}</span>
+                <span className="font-bold text-yellow-400">@{meci.cota.toFixed(2)}</span>
+              </div>
+            </div>
+            {index < meciuri.length - 1 && (
+              <hr className="border-t border-white opacity-20 my-4" />
+            )}
+          </React.Fragment>
+        ))}
+      </div>
     </div>
   );
 };
