@@ -1,6 +1,5 @@
 import localFont from 'next/font/local'
 
-// Fonturi Geist standard
 export const geistBold = localFont({
   src: '../public/fonts/Geist-Bold.woff2',
   variable: '--font-geist-bold'
