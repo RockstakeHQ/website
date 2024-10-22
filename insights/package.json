@@ -1,49 +1,39 @@
 {
-  "name": "insights",
+  "name": "lp-fast",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "export-jpg": "node --experimental-specifier-resolution=node scripts/exportToJpg.mjs"
+    "lint": "next lint"
   },
   "dependencies": {
-    "@hookform/resolvers": "^3.9.0",
-    "@radix-ui/react-dialog": "^1.1.2",
+    "@radix-ui/react-dialog": "^1.1.1",
     "@radix-ui/react-icons": "^1.3.0",
-    "@radix-ui/react-label": "^2.1.0",
-    "@radix-ui/react-navigation-menu": "^1.2.1",
+    "@radix-ui/react-navigation-menu": "^1.2.0",
     "@radix-ui/react-slot": "^1.1.0",
-    "@tailwindcss/typography": "^0.5.15",
+    "@tailwindcss/typography": "^0.5.13",
+    "@vercel/og": "^0.6.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
-    "geist": "^1.3.1",
-    "lucide-react": "^0.453.0",
-    "next": "14.2.15",
+    "lucide-react": "^0.400.0",
+    "next": "^14.2.15",
     "next-themes": "^0.3.0",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-hook-form": "^7.53.0",
+    "react": "^18",
+    "react-dom": "^18",
     "react-wrap-balancer": "^1.1.1",
-    "tailwind-merge": "^2.5.4",
-    "tailwindcss-animate": "^1.0.7",
-    "zod": "^3.23.8"
+    "tailwind-merge": "^2.3.0",
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
     "@types/node": "^20",
-    "@types/puppeteer": "^7.0.4",
-    "@types/react": "^18.3.11",
-    "@types/react-dom": "^18.3.1",
-    "babel-plugin-transform-require-context": "^0.1.1",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
     "eslint": "^8",
-    "eslint-config-next": "14.2.15",
+    "eslint-config-next": "14.2.4",
     "postcss": "^8",
-    "puppeteer": "^23.6.0",
     "tailwindcss": "^3.4.1",
-    "ts-node": "^10.9.2",
-    "tsconfig-paths": "^4.2.0",
-    "typescript": "^5.6.3"
+    "typescript": "^5"
   }
 }

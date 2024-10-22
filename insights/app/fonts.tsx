@@ -1,53 +1,63 @@
 import localFont from 'next/font/local'
 
-//Sans
-export const geistBold = localFont({ 
+// Fonturi Geist standard
+export const geistBold = localFont({
   src: '../public/fonts/Geist-Bold.woff2',
-  variable: '--font-geist-bold',
-})
-export const geistSemiBold = localFont({ 
-  src: '../public/fonts/Geist-SemiBold.woff2',
-  variable: '--font-geist-semi-bold',
-})
-export const geistExtraBold = localFont({ 
-  src: '../public/fonts/Geist-ExtraBold.woff2',
-  variable: '--font-geist-extra-bold',
-})
-export const geistBlack = localFont({ 
-  src: '../public/fonts/Geist-Black.woff2',
-  variable: '--font-geist-black',
-})
-export const geistRegular = localFont({ 
-  src: '../public/fonts/Geist-Regular.woff2',
-  variable: '--font-geist-regular',
-})
-export const geistMedium = localFont({ 
-  src: '../public/fonts/Geist-Medium.woff2',
-  variable: '--font-geist-medium',
-})
-export const geistLight = localFont({ 
-  src: '../public/fonts/Geist-Light.woff2',
-  variable: '--font-geist-light',
+  variable: '--font-geist-bold'
 })
 
-//Mono
-export const geistMonoMedium = localFont({ 
+export const geistSemiBold = localFont({
+  src: '../public/fonts/Geist-SemiBold.woff2',
+  variable: '--font-geist-semi-bold'
+})
+
+export const geistExtraBold = localFont({
+  src: '../public/fonts/Geist-ExtraBold.woff2',
+  variable: '--font-geist-extra-bold'
+})
+
+export const geistBlack = localFont({
+  src: '../public/fonts/Geist-Black.woff2',
+  variable: '--font-geist-black'
+})
+
+export const geistRegular = localFont({
+  src: '../public/fonts/Geist-Regular.woff2',
+  variable: '--font-geist-regular'
+})
+
+export const geistMedium = localFont({
+  src: '../public/fonts/Geist-Medium.woff2',
+  variable: '--font-geist-medium'
+})
+
+export const geistLight = localFont({
+  src: '../public/fonts/Geist-Light.woff2',
+  variable: '--font-geist-light'
+})
+
+// Fonturi Geist Mono
+export const geistMonoMedium = localFont({
   src: '../public/fonts/GeistMono-Medium.ttf',
-  variable: '--font-geist-mono-medium',
+  variable: '--font-geist-mono-medium'
 })
-export const geistMonoRegular = localFont({ 
+
+export const geistMonoRegular = localFont({
   src: '../public/fonts/GeistMono-Regular.ttf',
-  variable: '--font-geist-mono-regular',
+  variable: '--font-geist-mono-regular'
 })
-export const geistMonoSemiBold = localFont({ 
+
+export const geistMonoSemiBold = localFont({
   src: '../public/fonts/GeistMono-SemiBold.ttf',
-  variable: '--font-geist-mono-semibold',
+  variable: '--font-geist-mono-semibold'
 })
-export const geistMonoBold = localFont({ 
+
+export const geistMonoBold = localFont({
   src: '../public/fonts/GeistMono-Bold.ttf',
-  variable: '--font-geist-mono-bold',
+  variable: '--font-geist-mono-bold'
 })
-export const geistMonoBlack = localFont({ 
+
+export const geistMonoBlack = localFont({
   src: '../public/fonts/GeistMono-Black.ttf',
-  variable: '--font-geist-mono-black',
+  variable: '--font-geist-mono-black'
 })
