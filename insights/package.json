@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "analysis": "tsx scripts/create-analysis.ts",
+    "ticket": "tsx scripts/create-ticket.ts"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.1",
@@ -20,14 +22,17 @@
     "@vercel/og": "^0.6.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "dotenv": "^16.4.5",
     "lucide-react": "^0.400.0",
     "next": "^14.2.15",
     "next-themes": "^0.3.0",
     "react": "^18",
     "react-dom": "^18",
     "react-wrap-balancer": "^1.1.1",
+    "sharp": "^0.33.5",
     "tailwind-merge": "^2.3.0",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "tsx": "^4.19.1"
   },
   "devDependencies": {
     "@types/node": "^20",
