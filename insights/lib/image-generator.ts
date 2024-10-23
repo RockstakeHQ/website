@@ -23,97 +23,98 @@ interface MatchPrediction {
 
 async function generatePredictionImage(
   matches: MatchPrediction[],
-  width = 1920,
-  height = 1080
+  width = 1200,
+  height = 675
 ): Promise<Buffer> {
   const svgContent = `
-    <svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <style>
-          @font-face {
-            font-family: 'Geist-SemiBold';
-            src: url('data:font/woff2;base64,${fs.readFileSync(path.join(process.cwd(), 'public/fonts/Geist-SemiBold.woff2')).toString('base64')}');
-          }
-          @font-face {
-            font-family: 'Geist-Regular';
-            src: url('data:font/woff2;base64,${fs.readFileSync(path.join(process.cwd(), 'public/fonts/Geist-Regular.woff2')).toString('base64')}');
-          }
-        </style>
-      </defs>
+  <svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <style>
+        @font-face {
+          font-family: 'Geist-SemiBold';
+          src: url('data:font/woff2;base64,${fs.readFileSync(path.join(process.cwd(), 'public/fonts/Geist-SemiBold.woff2')).toString('base64')}');
+        }
+        @font-face {
+          font-family: 'Geist-Regular';
+          src: url('data:font/woff2;base64,${fs.readFileSync(path.join(process.cwd(), 'public/fonts/Geist-Regular.woff2')).toString('base64')}');
+        }
+      </style>
+    </defs>
 
-      ${matches.map((match, index) => {
-        const yOffset = 100 + index * 200; // Spațiere între casete
-        return `
-          <!-- Match Box Container -->
-          <g transform="translate(200, ${yOffset})">
-            <!-- Background Box -->
-            <rect
-              x="0"
-              y="0"
-              width="1520"
-              height="150"
-              fill="rgba(0, 0, 0, 0.75)"
-              rx="8"
-            />
+    ${matches.map((match, index) => {
+      const yOffset = height / 2 - (matches.length * 80) + index * 200; // Centrare verticală
+      const xOffset = width / 2 - 760; // Centrare orizontală pentru lățimea de 1520px
+      return `
+        <g transform="translate(${xOffset}, ${yOffset})">
+          <!-- Background Box -->
+          <rect
+            x="0"
+            y="0"
+            width="1520"
+            height="150"
+            fill="rgba(0, 0, 0, 0.75)"
+            rx="8"
+          />
 
-            <!-- Competition Info -->
-            <text 
-              x="20" 
-              y="40" 
-              fill="#FFFFFF" 
-              font-family="Geist-Regular" 
-              font-size="24"
-            >
-              <tspan>${match.competition}</tspan>
-            </text>
+          <!-- Competition Info -->
+          <text 
+            x="20" 
+            y="40" 
+            fill="#FFFFFF" 
+            font-family="Geist-Regular" 
+            font-size="24"
+          >
+            <tspan>${match.competition}</tspan>
+          </text>
 
-            <!-- Teams -->
-            <text 
-              x="20" 
-              y="85" 
-              fill="#FFFFFF" 
-              font-family="Geist-SemiBold" 
-              font-size="36"
-            >${match.team1} vs ${match.team2}</text>
+          <!-- Teams -->
+          <text 
+            x="20" 
+            y="85" 
+            fill="#FFFFFF" 
+            font-family="Geist-SemiBold" 
+            font-size="36"
+          >${match.team1} vs ${match.team2}</text>
 
-            <!-- Prediction Box -->
-            <rect
-              x="20"
-              y="100"
-              width="120"
-              height="35"
-              fill="rgba(0, 255, 0, 0.15)"
-              rx="4"
-            />
-            <text 
-              x="45" 
-              y="125" 
-              fill="#00FF00" 
-              font-family="Geist-SemiBold" 
-              font-size="24"
-            >${match.prediction}</text>
+          <!-- Prediction Box -->
+          <rect
+            x="20"
+            y="100"
+            width="120"
+            height="35"
+            fill="rgba(0, 255, 0, 0.15)"
+            rx="4"
+          />
+          <text 
+            x="45" 
+            y="125" 
+            fill="#00FF00" 
+            font-family="Geist-SemiBold" 
+            font-size="24"
+          >${match.prediction}</text>
 
-            <!-- Odds Box -->
-            <rect
-              x="1380"
-              y="100"
-              width="120"
-              height="35"
-              fill="rgba(255, 215, 0, 0.15)"
-              rx="4"
-            />
-            <text 
-              x="1400" 
-              y="125" 
-              fill="#FFD700" 
-              font-family="Geist-SemiBold" 
-              font-size="24"
-            >@${match.odds.toFixed(2)}</text>
-          </g>
-        `;
-      }).join('')}
-    </svg>
-  `;
+          <!-- Odds Box -->
+          <rect
+            x="1380"
+            y="100"
+            width="120"
+            height="35"
+            fill="rgba(255, 215, 0, 0.15)"
+            rx="4"
+          />
+          <text 
+            x="1400" 
+            y="125" 
+            fill="#FFD700" 
+            font-family="Geist-SemiBold" 
+            font-size="24"
+          >@${match.odds.toFixed(2)}</text>
+        </g>
+      `;
+    }).join('')}
+  </svg>
+`;
+
 
   return await sharp(path.join(process.cwd(), 'assets', 'tips_background.png'))
     .resize(width, height, {
@@ -137,8 +138,8 @@ async function generatePredictionImage(
 
 async function generateThumbnailImage(
   matches: MatchPrediction[],
-  width = 1920,
-  height = 1080
+  width = 1200,
+  height = 675,
 ): Promise<Buffer> {
   const svgContent = `
     <svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg">
