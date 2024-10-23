@@ -1,33 +1,35 @@
-import { createClient, SupabaseClient } from '@supabase/supabase-js';
+// lib/image-uploader.ts
+import { v2 as cloudinary } from 'cloudinary';
+import dotenv from 'dotenv';
 
-interface UploadResult {
-  path: string;
-  url: string;
-}
+dotenv.config({ path: '.env.local' });
+
+// Configurare Cloudinary
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME!,
+  api_key: process.env.CLOUDINARY_API_KEY!,
+  api_secret: process.env.CLOUDINARY_API_SECRET!
+});
 
 export async function uploadImage(
-  supabase: SupabaseClient,
   buffer: Buffer,
   folder: string,
   filename: string
-): Promise<UploadResult> {
-  const fullPath = `${folder}/${filename}`;
-  
-  const { data, error } = await supabase.storage
-    .from('betting-images')
-    .upload(fullPath, buffer, {
-      contentType: 'image/png',
-      upsert: true
-    });
-
-  if (error) throw error;
-
-  const { data: publicUrl } = supabase.storage
-    .from('betting-images')
-    .getPublicUrl(fullPath);
-
-  return {
-    path: fullPath,
-    url: publicUrl.publicUrl
-  };
+): Promise<{ url: string }> {
+  return new Promise((resolve, reject) => {
+    cloudinary.uploader
+      .upload_stream(
+        {
+          folder: `betting-tips/${folder}`,
+          public_id: filename,
+          resource_type: 'image',
+          format: 'png'
+        },
+        (error, result) => {
+          if (error || !result) reject(error);
+          else resolve({ url: result.secure_url });
+        }
+      )
+      .end(buffer);
+  });
 }

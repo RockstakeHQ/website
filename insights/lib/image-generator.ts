@@ -1,3 +1,14 @@
+// <style>
+// @font-face {
+//   font-family: 'Geist-SemiBold';
+//   src: url('data:font/woff2;base64,${fs.readFileSync(path.join(process.cwd(), 'public/fonts/Geist-SemiBold.woff2')).toString('base64')}');
+// }
+// @font-face {
+//   font-family: 'Geist-Regular';
+//   src: url('data:font/woff2;base64,${fs.readFileSync(path.join(process.cwd(), 'public/fonts/Geist-Regular.woff2')).toString('base64')}');
+// }
+// </style>
+// scripts/utils/imageGenerator.ts
 import sharp from 'sharp';
 import path from 'path';
 import fs from 'fs';
@@ -10,97 +21,114 @@ interface MatchPrediction {
   odds: number;
 }
 
-// Definim calea către fonturi
-const FONTS = {
-  GEIST_REGULAR: fs.readFileSync(path.join(process.cwd(), 'public/fonts/Geist-Regular.woff2')),
-  GEIST_BOLD: fs.readFileSync(path.join(process.cwd(), 'public/fonts/Geist-Bold.woff2')),
-  GEIST_MONO_REGULAR: fs.readFileSync(path.join(process.cwd(), 'public/fonts/GeistMono-Regular.ttf')),
-  GEIST_MONO_SEMIBOLD: fs.readFileSync(path.join(process.cwd(), 'public/fonts/GeistMono-SemiBold.ttf'))
-};
-
 async function generatePredictionImage(
   matches: MatchPrediction[],
-  width = 1200,
-  height = 675
+  width = 1920,
+  height = 1080
 ): Promise<Buffer> {
   const svgContent = `
     <svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <style>
           @font-face {
-            font-family: 'GeistMono-Regular';
-            src: url('data:font/ttf;base64,${FONTS.GEIST_MONO_REGULAR.toString('base64')}');
+            font-family: 'Geist-SemiBold';
+            src: url('data:font/woff2;base64,${fs.readFileSync(path.join(process.cwd(), 'public/fonts/Geist-SemiBold.woff2')).toString('base64')}');
           }
           @font-face {
-            font-family: 'Geist-Bold';
-            src: url('data:font/woff2;base64,${FONTS.GEIST_BOLD.toString('base64')}');
-          }
-          @font-face {
-            font-family: 'GeistMono-SemiBold';
-            src: url('data:font/ttf;base64,${FONTS.GEIST_MONO_SEMIBOLD.toString('base64')}');
+            font-family: 'Geist-Regular';
+            src: url('data:font/woff2;base64,${fs.readFileSync(path.join(process.cwd(), 'public/fonts/Geist-Regular.woff2')).toString('base64')}');
           }
         </style>
-        <linearGradient id="grad" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" style="stop-color:rgba(0,0,0,0.8);stop-opacity:1" />
-          <stop offset="100%" style="stop-color:rgba(0,0,0,0.9);stop-opacity:1" />
-        </linearGradient>
       </defs>
-      
-      <!-- Background overlay -->
-      <rect width="100%" height="100%" fill="url(#grad)"/>
-      
-      ${matches.map((match, index) => `
-        <!-- Match ${index + 1} -->
-        <g transform="translate(80, ${150 + index * 200})">
-          <!-- Competition -->
-          <text 
-            x="0" 
-            y="0" 
-            fill="#999999" 
-            font-family="GeistMono-Regular" 
-            font-size="24px"
-            letter-spacing="0.5px"
-          >${match.competition}</text>
-          
-          <!-- Teams -->
-          <text 
-            x="0" 
-            y="50" 
-            fill="white" 
-            font-family="Geist-Bold" 
-            font-size="36px"
-          >${match.team1} vs ${match.team2}</text>
-          
-          <!-- Prediction -->
-          <text 
-            x="0" 
-            y="100" 
-            fill="#4CAF50" 
-            font-family="GeistMono-SemiBold" 
-            font-size="32px"
-            letter-spacing="0.5px"
-          >${match.prediction}</text>
-          
-          <!-- Odds -->
-          <text 
-            x="${width - 180}" 
-            y="100" 
-            fill="#FFD700" 
-            font-family="GeistMono-SemiBold" 
-            font-size="32px"
-            letter-spacing="0.5px"
-          >@${match.odds.toFixed(2)}</text>
-        </g>
-      `).join('')}
+
+      ${matches.map((match, index) => {
+        const yOffset = 100 + index * 200; // Spațiere între casete
+        return `
+          <!-- Match Box Container -->
+          <g transform="translate(200, ${yOffset})">
+            <!-- Background Box -->
+            <rect
+              x="0"
+              y="0"
+              width="1520"
+              height="150"
+              fill="rgba(0, 0, 0, 0.75)"
+              rx="8"
+            />
+
+            <!-- Competition Info -->
+            <text 
+              x="20" 
+              y="40" 
+              fill="#FFFFFF" 
+              font-family="Geist-Regular" 
+              font-size="24"
+            >
+              <tspan>${match.competition}</tspan>
+            </text>
+
+            <!-- Teams -->
+            <text 
+              x="20" 
+              y="85" 
+              fill="#FFFFFF" 
+              font-family="Geist-SemiBold" 
+              font-size="36"
+            >${match.team1} vs ${match.team2}</text>
+
+            <!-- Prediction Box -->
+            <rect
+              x="20"
+              y="100"
+              width="120"
+              height="35"
+              fill="rgba(0, 255, 0, 0.15)"
+              rx="4"
+            />
+            <text 
+              x="45" 
+              y="125" 
+              fill="#00FF00" 
+              font-family="Geist-SemiBold" 
+              font-size="24"
+            >${match.prediction}</text>
+
+            <!-- Odds Box -->
+            <rect
+              x="1380"
+              y="100"
+              width="120"
+              height="35"
+              fill="rgba(255, 215, 0, 0.15)"
+              rx="4"
+            />
+            <text 
+              x="1400" 
+              y="125" 
+              fill="#FFD700" 
+              font-family="Geist-SemiBold" 
+              font-size="24"
+            >@${match.odds.toFixed(2)}</text>
+          </g>
+        `;
+      }).join('')}
     </svg>
   `;
 
-  // Folosim imaginea de fundal din noua locație
-  return await sharp(Buffer.from(svgContent))
+  return await sharp(path.join(process.cwd(), 'assets', 'tips_background.png'))
+    .resize(width, height, {
+      fit: 'cover',
+      position: 'center'
+    })
+    .modulate({
+      brightness: 0.9,  // Mărit pentru a fi mai luminos
+      saturation: 0.8,
+      lightness: 1.1
+    })
     .composite([
       {
-        input: path.join(process.cwd(), 'assets', 'tips_background.png'), // Noua cale către imagine
-        blend: 'overlay'
+        input: Buffer.from(svgContent),
+        blend: 'over'
       }
     ])
     .png()
@@ -108,61 +136,110 @@ async function generatePredictionImage(
 }
 
 async function generateThumbnailImage(
-  totalOdds: number,
-  matchCount: number,
-  width = 1200,
-  height = 675
+  matches: MatchPrediction[],
+  width = 1920,
+  height = 1080
 ): Promise<Buffer> {
   const svgContent = `
     <svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <style>
           @font-face {
-            font-family: 'Geist-Bold';
-            src: url('data:font/woff2;base64,${FONTS.GEIST_BOLD.toString('base64')}');
-          }
-          @font-face {
-            font-family: 'GeistMono-SemiBold';
-            src: url('data:font/ttf;base64,${FONTS.GEIST_MONO_SEMIBOLD.toString('base64')}');
+            font-family: 'Geist-SemiBold';
+            src: url('data:font/woff2;base64,${fs.readFileSync(path.join(process.cwd(), 'public/fonts/Geist-SemiBold.woff2')).toString('base64')}');
           }
         </style>
-        <linearGradient id="grad" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" style="stop-color:rgba(0,0,0,0.7);stop-opacity:1" />
-          <stop offset="100%" style="stop-color:rgba(0,0,0,0.85);stop-opacity:1" />
-        </linearGradient>
       </defs>
-      
-      <!-- Background overlay -->
-      <rect width="100%" height="100%" fill="url(#grad)"/>
-      
-      <!-- Title -->
-      <text 
-        x="50%" 
-        y="${height/2 - 50}" 
-        text-anchor="middle" 
-        fill="white" 
-        font-family="Geist-Bold" 
-        font-size="48px"
-      >SUPER BILET ${matchCount} PONTURI</text>
-      
-      <!-- Total odds -->
-      <text 
-        x="50%" 
-        y="${height/2 + 50}" 
-        text-anchor="middle" 
-        fill="#FFD700" 
-        font-family="GeistMono-SemiBold" 
-        font-size="72px"
-        letter-spacing="1px"
-      >COTĂ TOTALĂ: ${totalOdds.toFixed(2)}</text>
+
+      ${matches.map((match, index) => {
+        const yOffset = height/2 - (matches.length * 120) + (index * 240); // Centrăm vertical
+        return `
+          <!-- Match Box Container -->
+          <g transform="translate(${width/2 - 600}, ${yOffset})">
+            <!-- Background Box with Shadow Effect -->
+            <rect
+              x="0"
+              y="0"
+              width="1200"
+              height="180"
+              fill="rgba(0, 0, 0, 0.9)"
+              rx="8"
+            />
+
+            <!-- Competition -->
+            <text 
+              x="40" 
+              y="45" 
+              fill="#FFFFFF" 
+              font-family="Inter" 
+              font-size="24"
+            >${match.competition}</text>
+
+            <!-- Teams -->
+            <text 
+              x="40" 
+              y="95" 
+              fill="#FFFFFF" 
+              font-family="Inter-Bold" 
+              font-size="40"
+              letter-spacing="-0.5"
+            >${match.team1} vs ${match.team2}</text>
+
+            <!-- Prediction Container -->
+            <rect
+              x="40"
+              y="115"
+              width="100"
+              height="36"
+              fill="rgba(0, 255, 0, 0.15)"
+              rx="4"
+            />
+            <!-- Prediction Text -->
+            <text 
+              x="55" 
+              y="140" 
+              fill="#00FF00" 
+              font-family="Inter-Bold" 
+              font-size="24"
+            >${match.prediction}</text>
+
+            <!-- Odds Container -->
+            <rect
+              x="1060"
+              y="115"
+              width="100"
+              height="36"
+              fill="rgba(255, 215, 0, 0.15)"
+              rx="4"
+            />
+            <!-- Odds Text -->
+            <text 
+              x="1075" 
+              y="140" 
+              fill="#FFD700" 
+              font-family="Inter-Bold" 
+              font-size="24"
+            >@${match.odds.toFixed(2)}</text>
+          </g>
+        `;
+      }).join('')}
     </svg>
   `;
 
-  return await sharp(Buffer.from(svgContent))
+  return await sharp(path.join(process.cwd(), 'assets', 'tips_background.png'))
+    .resize(width, height, {
+      fit: 'cover',
+      position: 'center'
+    })
+    .modulate({
+      brightness: 0.9,
+      saturation: 0.8,
+      lightness: 1.1
+    })
     .composite([
       {
-        input: path.join(process.cwd(), 'assets', 'tips_background.png'),
-        blend: 'overlay'
+        input: Buffer.from(svgContent),
+        blend: 'over'
       }
     ])
     .png()

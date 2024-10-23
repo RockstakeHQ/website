@@ -53,6 +53,15 @@ async function createTicket() {
         competition: "La Liga",
         argument: "Real Madrid vine după o serie de victorii și are lot complet."
       },
+      {
+        team1: "Manchester United",
+        team2: "Liverpool",
+        match_date: "2024-02-24 18:00:00+00",
+        prediction: "Over 2.5",
+        odds: 1.80,
+        competition: "Premier League",
+        argument: "Ambele echipe au demonstrat că pot marca și primi goluri ușor."
+      }
     ];
 
     const totalOdds = Number(
@@ -60,26 +69,32 @@ async function createTicket() {
     );
 
     // Generăm și încărcăm thumbnail-ul
-    const thumbnailBuffer = await generateThumbnailImage(totalOdds, matches.length);
-    const thumbnail: UploadResult = await uploadImage(
-      supabaseAdmin,
+    const thumbnailBuffer = await generateThumbnailImage(matches, matches.length);
+    const thumbnail = await uploadImage(
       thumbnailBuffer,
       'thumbnails',
-      `ticket-${Date.now()}.png`
+      `ticket-${Date.now()}`
     );
 
     // Grupăm meciurile câte 2
     const matchGroups = groupMatches(matches);
 
     // Generăm și încărcăm imagini pentru fiecare grup
-    const predictionImages: UploadResult[] = await Promise.all(
+    const predictionImages = await Promise.all(
       matchGroups.map(async (group, index) => {
-        const buffer = await generatePredictionImage(group);
+        const matchesForImage = group.map(match => ({
+          team1: match.team1,
+          team2: match.team2,
+          prediction: match.prediction,
+          odds: match.odds,
+          competition: match.competition,
+        }));
+        
+        const buffer = await generatePredictionImage(matchesForImage);
         return await uploadImage(
-          supabaseAdmin,
           buffer,
           'predictions',
-          `prediction-${Date.now()}-${index}.png`
+          `prediction-${Date.now()}-${index}`
         );
       })
     );
