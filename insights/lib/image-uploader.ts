@@ -1,4 +1,3 @@
-// scripts/utils/imageUploader.ts
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
 interface UploadResult {

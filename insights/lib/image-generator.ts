@@ -161,7 +161,7 @@ async function generateThumbnailImage(
   return await sharp(Buffer.from(svgContent))
     .composite([
       {
-        input: path.join(process.cwd(), 'assets', 'tips_background'),
+        input: path.join(process.cwd(), 'assets', 'tips_background.png'),
         blend: 'overlay'
       }
     ])
