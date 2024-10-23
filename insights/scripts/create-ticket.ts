@@ -1,13 +1,10 @@
 // scripts/create-ticket.ts
+import { generatePredictionImage, generateThumbnailImage } from '@/lib/image-generator';
+import { uploadImage } from '@/lib/image-uploader';
 import { createClient } from '@supabase/supabase-js';
 import dotenv from 'dotenv';
 
 dotenv.config({ path: '.env.local' });
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
 
 interface Match {
   team1: string;
@@ -16,121 +13,143 @@ interface Match {
   prediction: string;
   odds: number;
   competition: string;
+  argument?: string;
 }
 
-function calculateTotalOdds(matches: Match[]): number {
-  return Number(matches.reduce((total, match) => total * match.odds, 1).toFixed(2));
+interface UploadResult {
+  path: string;
+  url: string;
 }
 
-function formatDate(dateString: string): string {
-  const date = new Date(dateString);
-  return date.toLocaleDateString('ro-RO', {
-    weekday: 'long',
-    day: 'numeric',
-    month: 'long',
-    hour: '2-digit',
-    minute: '2-digit'
-  });
-}
+const supabaseAdmin = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!,
+  {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false,
+      detectSessionInUrl: false
+    }
+  }
+);
 
-function generateContent(matches: Match[]): string {
-  const totalOdds = calculateTotalOdds(matches);
-  
-  const matchesContent = matches.map(match => `
-### ${match.team1} vs ${match.team2}
-- 🏆 Competiție: ${match.competition}
-- ⏰ Data: ${formatDate(match.match_date)}
-- 🎯 Pronostic: ${match.prediction}
-- 📈 Cotă: ${match.odds}`).join('\n\n');
-
-  return `# Bilet cu cotă ${totalOdds}
-
-Am pregătit un bilet cu ${matches.length} meciuri atent selectate.
-
-## Meciurile Selectate
-${matchesContent}
-
-## Cotă Totală: ${totalOdds}
-
-Succes! 🍀`;
+function groupMatches(matches: Match[]): Match[][] {
+  const groups: Match[][] = [];
+  for (let i = 0; i < matches.length; i += 2) {
+    groups.push(matches.slice(i, i + 2));
+  }
+  return groups;
 }
 
 async function createTicket() {
   try {
-    // MODIFICI DOAR MECIURILE AICI:
-    const matches = [
+    const matches: Match[] = [
       {
-        team1: 'Arsenal',
-        team2: 'Liverpool',
-        match_date: '2024-02-24 18:30:00+00',
-        prediction: 'Peste 2.5 goluri',
-        odds: 1.75,
-        competition: 'Premier League'
-      },
-      {
-        team1: 'Manchester City',
-        team2: 'Brentford',
-        match_date: '2024-02-25 17:00:00+00',
-        prediction: '1',
+        team1: "Real Madrid",
+        team2: "Barcelona",
+        match_date: "2024-02-24 20:30:00+00",
+        prediction: "1X",
         odds: 1.65,
-        competition: 'Premier League'
+        competition: "La Liga",
+        argument: "Real Madrid vine după o serie de victorii și are lot complet."
       },
-      {
-        team1: 'Newcastle',
-        team2: 'Manchester United',
-        match_date: '2024-02-25 19:30:00+00',
-        prediction: 'GG',
-        odds: 1.95,
-        competition: 'Premier League'
-      }
     ];
 
-    // Calculăm automat cota totală
-    const totalOdds = calculateTotalOdds(matches);
-    
-    // Generăm automat conținutul
-    const content = generateContent(matches);
+    const totalOdds = Number(
+      matches.reduce((total, match) => total * match.odds, 1).toFixed(2)
+    );
 
-    // Generăm titlul bazat pe cotă
-    const title = `Bilet Bonus Cotă ${totalOdds} - ${new Date().toLocaleDateString('ro-RO', { weekday: 'long' })}`;
+    // Generăm și încărcăm thumbnail-ul
+    const thumbnailBuffer = await generateThumbnailImage(totalOdds, matches.length);
+    const thumbnail: UploadResult = await uploadImage(
+      supabaseAdmin,
+      thumbnailBuffer,
+      'thumbnails',
+      `ticket-${Date.now()}.png`
+    );
 
-    const { data: ticket, error: ticketError } = await supabase
+    // Grupăm meciurile câte 2
+    const matchGroups = groupMatches(matches);
+
+    // Generăm și încărcăm imagini pentru fiecare grup
+    const predictionImages: UploadResult[] = await Promise.all(
+      matchGroups.map(async (group, index) => {
+        const buffer = await generatePredictionImage(group);
+        return await uploadImage(
+          supabaseAdmin,
+          buffer,
+          'predictions',
+          `prediction-${Date.now()}-${index}.png`
+        );
+      })
+    );
+
+    // Cream articolul
+    const { data: article, error: articleError } = await supabaseAdmin
       .from('articles')
       .insert({
-        title,
-        content,
+        title: `Super Bilet ${matches.length} Ponturi - Cotă ${totalOdds}`,
+        content: `Un super bilet cu ${matches.length} ponturi atent selectate pentru acest weekend.`,
         sport_type: 'football',
         article_type: 'ticket',
         total_odds: totalOdds,
         status: 'published',
-        meta_description: `Bilet de fotbal cu cotă ${totalOdds} pentru ${matches.length} meciuri din ${[...new Set(matches.map(m => m.competition))].join(', ')}`
+        header_image: thumbnail.url,
+        slug: `super-bilet-${matches.length}-ponturi-cota-${totalOdds}-${Date.now()}`
       })
       .select()
       .single();
 
-    if (ticketError) {
-      throw ticketError;
-    }
+    if (articleError) throw articleError;
 
-    const { error: matchesError } = await supabase
-      .from('matches')
-      .insert(
-        matches.map(match => ({
-          ...match,
-          article_id: ticket.id,
-          is_verified: true
-        }))
-      );
+    // Cream grupurile de predicții
+    for (const [index, matchGroup] of matchGroups.entries()) {
+      const argumentText = matchGroup
+        .map(match => `${match.team1} vs ${match.team2}:\n${match.argument}`)
+        .join('\n\n');
 
-    if (matchesError) {
-      throw matchesError;
+      const { data: predGroup, error: groupError } = await supabaseAdmin
+        .from('prediction_groups')
+        .insert({
+          article_id: article.id,
+          group_order: index + 1,
+          prediction_image: predictionImages[index].url,
+          argument_text: argumentText
+        })
+        .select()
+        .single();
+
+      if (groupError) throw groupError;
+
+      // Inserăm meciurile pentru acest grup
+      const { error: matchesError } = await supabaseAdmin
+        .from('matches')
+        .insert(
+          matchGroup.map(match => ({
+            team1: match.team1,
+            team2: match.team2,
+            match_date: match.match_date,
+            prediction: match.prediction,
+            odds: match.odds,
+            competition: match.competition,
+            article_id: article.id,
+            prediction_group_id: predGroup.id,
+            is_verified: true
+          }))
+        );
+
+      if (matchesError) throw matchesError;
     }
 
     console.log('✅ Biletul a fost creat cu succes!');
-    console.log('📝 ID bilet:', ticket.id);
+    console.log('📝 ID articol:', article.id);
+    console.log('🖼️ Thumbnail:', thumbnail.url);
+    console.log('🎯 Număr de grupuri create:', matchGroups.length);
     console.log('💰 Cotă totală:', totalOdds);
-    console.log('\nConținut generat:');
-    console.log(content);
+    console.log('\nImagini generate pentru grupuri:');
+    predictionImages.forEach((img, index) => {
+      console.log(`Grup ${index + 1}:`, img.url);
+    });
 
   } catch (error) {
     console.error('❌ Eroare:', error);
